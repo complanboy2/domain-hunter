@@ -1,0 +1,33 @@
+{
+  "name": "domain-hunter",
+  "version": "1.0.0",
+  "description": "Automated domain intelligence system for Fortune 500, S&P 500, Unicorns, YC companies, and AI buzzwords",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js"
+  },
+  "keywords": [
+    "domain",
+    "availability",
+    "rdap",
+    "automation",
+    "fortune500",
+    "sp500",
+    "unicorn",
+    "yc",
+    "github-trending"
+  ],
+  "author": "complanboy2",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "node-fetch": "^2.7.0",
+    "nodemailer": "^6.9.7",
+    "p-limit": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

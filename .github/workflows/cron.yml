@@ -1,0 +1,60 @@
+name: Domain Hunter Daily Check
+
+on:
+  schedule:
+    # Run daily at 2:00 AM UTC
+    - cron: '0 2 * * *'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  check-domains:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180  # 3 hours max
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run domain checker
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+        run: node index.js
+      
+      - name: Upload results if available
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: domain-results-${{ github.run_number }}
+          path: results.csv
+          if-no-files-found: ignore
+          retention-days: 30
+      
+      - name: Job summary
+        if: always()
+        run: |
+          echo "## Domain Hunter Run Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Run Time:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f results.csv ]; then
+            LINES=$(wc -l < results.csv)
+            echo "**Status:** ✅ Found interesting domains!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Results:** $LINES rows in results.csv" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Download the artifact to see full results." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Status:** ℹ️ No interesting domains found in this batch" >> $GITHUB_STEP_SUMMARY
+          fi
