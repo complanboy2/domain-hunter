@@ -155,7 +155,7 @@ def main():
     print('')
     
     # Get today's batch of keywords
-    keywords = get_todays_batch(200)
+    keywords = get_todays_batch(5)
     
     if len(keywords) == 0:
         print('No keywords to process')
