@@ -67,7 +67,7 @@ def process_all_keywords():
     
     return result
 
-def get_todays_batch(batch_size=5):
+def get_todays_batch(batch_size=200):
     """Get batch of keywords for today's run based on day of month"""
     print('\n=== Determining Today\'s Batch ===\n')
     
