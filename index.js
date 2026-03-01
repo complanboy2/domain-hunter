@@ -1,6 +1,5 @@
 import { promises as dns } from 'dns';
 import { writeFileSync } from 'fs';
-import fetch from 'node-fetch';
 import pLimit from 'p-limit';
 import { getTodaysBatch } from './keywords.js';
 import { sendEmail } from './mailer.js';
