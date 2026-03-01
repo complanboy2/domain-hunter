@@ -17,20 +17,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '20'
+          python-version: '3.11'
       
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-        timeout-minutes: 3
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
       
       - name: Run domain checker
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        run: node index.js
+        run: python main.py
       
       - name: Upload results if available
         if: always()

@@ -2,6 +2,8 @@
 
 Production-ready automated domain intelligence system that checks 2000-4000+ company names daily across multiple TLDs. Runs via GitHub Actions with zero API costs.
 
+**Built with Python for reliable GitHub Actions execution.**
+
 ## Overview
 
 Domain Hunter automatically:
@@ -57,11 +59,11 @@ Domain Hunter automatically:
 
 ```
 domain-hunter/
-├── dataSources.js      # Fetches from 7 different sources
-├── keywords.js         # Deduplication, normalization, batching
-├── index.js           # Main logic: RDAP + DNS checking
-├── mailer.js          # Gmail SMTP notifications
-├── package.json       # Dependencies
+├── data_sources.py    # Fetches from 7 different sources
+├── keywords.py        # Deduplication, normalization, batching
+├── main.py            # Main logic: RDAP + DNS checking
+├── mailer.py          # Gmail SMTP notifications
+├── requirements.txt   # Python dependencies
 ├── .github/
 │   └── workflows/
 │       └── cron.yml   # GitHub Actions daily schedule
@@ -80,7 +82,7 @@ cd domain-hunter
 ### 2. Install Dependencies (Local Testing Only)
 
 ```bash
-npm install
+pip install -r requirements.txt
 ```
 
 ### 3. Set Up Gmail App Password
@@ -329,7 +331,7 @@ export EMAIL_USER="your@gmail.com"
 export EMAIL_PASS="your-app-password"
 
 # Run
-node index.js
+python main.py
 ```
 
 **Note:** Local runs use same batching logic based on current day.
